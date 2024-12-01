@@ -8,11 +8,43 @@ import postCssPxToRem from 'postcss-pxtorem'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
+import { Plugin as importToCDN } from 'vite-plugin-cdn-import'
+
 // https://vite.dev/config/
 export default defineConfig({
   publicPath: './',
   plugins: [
     vue(),
+    importToCDN({
+      modules: [
+        {
+          name: 'vue',
+          var: 'Vue',
+          path: 'https://cdn.bootcdn.net/ajax/libs/vue/3.3.4/vue.global.prod.js'
+        },
+        //cdn引入vue-demi
+        {
+          name: 'vue-demi',
+          var: 'VueDemi',
+          path: 'https://cdn.jsdelivr.net/npm/vue-demi@0.14.6/lib/index.iife.min.js'
+        },
+        {
+          name: 'vue-router',
+          var: 'VueRouter',
+          path: 'https://cdn.bootcdn.net/ajax/libs/vue-router/4.2.4/vue-router.global.prod.js'
+        },
+        {
+          name: 'naive-ui',
+          var: 'naive',
+          path: 'https://cdn.bootcdn.net/ajax/libs/naive-ui/2.34.4/index.prod.min.js'
+        },
+        {
+          name: 'pinia',
+          var: 'Pinia',
+          path: 'https://cdn.jsdelivr.net/npm/pinia@2.1.7/dist/pinia.iife.min.js'
+        }
+      ]
+    }),
     AutoImport({
       resolvers: [ElementPlusResolver()],
     }),
